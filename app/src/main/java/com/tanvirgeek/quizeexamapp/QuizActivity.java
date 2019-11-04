@@ -91,6 +91,7 @@ public class QuizActivity extends AppCompatActivity {
         rb1.setTextColor(Color.RED);
         rb2.setTextColor(Color.RED);
         rb3.setTextColor(Color.RED);
+        rb4.setTextColor(Color.RED);
 
         switch (currentQuestion.getAnswerNo()){
             case 1:
@@ -98,16 +99,16 @@ public class QuizActivity extends AppCompatActivity {
                 textViewQuestion.setText("Answer1 is correct");
                 break;
             case 2:
-                rb1.setTextColor(Color.GREEN);
+                rb2.setTextColor(Color.GREEN);
                 textViewQuestion.setText("Answer2 is correct");
                 break;
 
             case 3:
-                rb1.setTextColor(Color.GREEN);
+                rb3.setTextColor(Color.GREEN);
                 textViewQuestion.setText("Answer3 is correct");
                 break;
             case 4:
-                rb1.setTextColor(Color.GREEN);
+                rb4.setTextColor(Color.GREEN);
                 textViewQuestion.setText("Answer4 is correct");
                 break;
         }
@@ -130,9 +131,9 @@ public class QuizActivity extends AppCompatActivity {
 
             textViewQuestion.setText(currentQuestion.getQuestion());
             rb1.setText(currentQuestion.getOption1());
-            rb2.setText(currentQuestion.getOption1());
-            rb3.setText(currentQuestion.getOption1());
-            rb4.setText(currentQuestion.getOption1());
+            rb2.setText(currentQuestion.getOption2());
+            rb3.setText(currentQuestion.getOption3());
+            rb4.setText(currentQuestion.getOption4());
 
             questionCounter ++;
             textViewQuestionCount.setText("Question: " + questionCounter + "/" + questionCountTotal);

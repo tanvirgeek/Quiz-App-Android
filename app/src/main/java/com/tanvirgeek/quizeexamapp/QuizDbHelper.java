@@ -15,12 +15,12 @@ import static com.tanvirgeek.quizeexamapp.QuizContract.*;
 
 public class QuizDbHelper extends SQLiteOpenHelper {
 
-    private static final String DAATABASE_NAME = "Question.db";
+    private static final String DATABASE_NAME = "Question.db";
     private static final int DATABASE_VERSION = 1;
     private SQLiteDatabase db;
 
     public QuizDbHelper(@Nullable Context context) {
-        super(context,DAATABASE_NAME, null,DATABASE_VERSION);
+        super(context,DATABASE_NAME, null,DATABASE_VERSION);
     }
 
     @Override
@@ -49,7 +49,13 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     private void fillQuestionsTable(){
         Question q1 = new Question("A is correct", "A", "B","C","D",1);
         Question q2 = new Question("B is correct", "A", "B","C","D",2);
+
+        Question q3 = new Question("A is correct", "A", "B","C","D",1);
+        Question q4 = new Question("B is correct", "A", "B","C","D",2);
         addQuestion(q1);
+        addQuestion(q2);
+        addQuestion(q3);
+        addQuestion(q4);
     }
 
     private void addQuestion(Question question){
@@ -75,6 +81,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
                 q.setOption2(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION2)));
                 q.setOption3(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION3)));
                 q.setOption4(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION4)));
+                q.setAnswerNo(c.getInt(c.getColumnIndex(QuestionsTable.COLUMN_ANSWERNO)));
                 questionList.add(q);
             }while(c.moveToNext());
         }

@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
                 startQuiz();
             }
         });
+
     }
 
     private void startQuiz(){
