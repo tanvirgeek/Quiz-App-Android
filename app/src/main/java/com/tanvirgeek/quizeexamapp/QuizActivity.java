@@ -1,5 +1,6 @@
 package com.tanvirgeek.quizeexamapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -23,6 +25,13 @@ public class QuizActivity extends AppCompatActivity {
     public static final String EXTRA_SCORE = "extrascore";
     private static final long COUNTDOWN_IN_MILLIS = 30000;
     private TextView textViewQuestion;
+
+    private static final String KEY_SCORE = "keyScore";
+    private static final String KEY_QUESTION_COUNT = "keyQuestionCount";
+    private static final String KEY_MILLIS_LEFT = "keyQuestionCount";
+    private static final String KEY_ANSWERED = "keyAnswered";
+    private static final String KEY_QUESTION_LIST = "keyQuestionList";
+
     private TextView textViewScore;
     private TextView textViewQuestionCount;
     private TextView textViewCountDown;
@@ -216,5 +225,14 @@ public class QuizActivity extends AppCompatActivity {
         if(countDownTimer != null){
             countDownTimer.cancel();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_SCORE, score);
+        outState.putInt(KEY_QUESTION_COUNT,questionCounter);
+        outState.putLong(KEY_MILLIS_LEFT,timeLeftinMillis);
+        outState.putParcelableArrayList(KEY_QUESTION_LIST,questionList);
     }
 }
