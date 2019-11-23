@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -41,7 +42,7 @@ public class QuizActivity extends AppCompatActivity {
     private RadioButton rb3;
     private RadioButton rb4;
     private Button buttonConfirmNext;
-    private List<Question> questionList;
+    private ArrayList<Question> questionList;
 
     private ColorStateList textcolorDefaultRB;
     private ColorStateList getTextcolorDefaultCD;
@@ -72,12 +73,30 @@ public class QuizActivity extends AppCompatActivity {
         buttonConfirmNext = findViewById(R.id.button_confirm_text);
         textcolorDefaultRB = rb1.getTextColors();
         getTextcolorDefaultCD = textViewCountDown.getTextColors();
-        QuizDbHelper dbHelper = new QuizDbHelper(this);
-        questionList = dbHelper.getAllQuestions();
 
-        questionCountTotal = questionList.size();
-        Collections.shuffle(questionList);
-        showNextQuestion();
+        if (savedInstanceState == null) {
+            QuizDbHelper dbHelper = new QuizDbHelper(this);
+            questionList = dbHelper.getAllQuestions();
+            questionCountTotal = questionList.size();
+            Collections.shuffle(questionList);
+
+            showNextQuestion();
+        } else {
+            questionList = savedInstanceState.getParcelableArrayList(KEY_QUESTION_LIST);
+            questionCountTotal = questionList.size();
+            questionCounter = savedInstanceState.getInt(KEY_QUESTION_COUNT);
+            currentQuestion = questionList.get(questionCounter - 1);
+            score = savedInstanceState.getInt(KEY_SCORE);
+            timeLeftinMillis = savedInstanceState.getLong(KEY_MILLIS_LEFT);
+            answered = savedInstanceState.getBoolean(KEY_ANSWERED);
+
+            if (!answered) {
+                startCountDown();
+            } else {
+                updateCountDownText();
+                showSolution();
+            }
+        }
 
         buttonConfirmNext.setOnClickListener(new View.OnClickListener() {
             @Override
