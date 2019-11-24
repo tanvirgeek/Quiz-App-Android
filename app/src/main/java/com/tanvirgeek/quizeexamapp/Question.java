@@ -4,22 +4,29 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Question implements Parcelable{
+
+    public static final String DIFFICULTY_EASY = "EASY";
+    public static final String DIFFICULTY_MEDIUM = "Medium";
+    public static final String DIFFICULTY_HARD = "HARD";
     private String question;
     private String option1;
     private String option2;
     private String option3;
     private String option4;
     private int answerNo;
+    private String difficulty;
 
     public Question(){}
 
-    public Question(String question, String option1, String option2, String option3, String option4, int answerNo) {
+    public Question(String question, String option1, String option2, String option3,
+                    String option4, int answerNo, String difficulty) {
         this.question = question;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
         this.option4 = option4;
         this.answerNo = answerNo;
+        this.difficulty = difficulty;
     }
 
     protected Question(Parcel in) {
@@ -29,6 +36,7 @@ public class Question implements Parcelable{
         option3 = in.readString();
         option4 = in.readString();
         answerNo = in.readInt();
+        difficulty = in.readString();
     }
 
     @Override
@@ -39,6 +47,7 @@ public class Question implements Parcelable{
         dest.writeString(option3);
         dest.writeString(option4);
         dest.writeInt(answerNo);
+        dest.writeString(difficulty);
     }
 
     @Override
@@ -104,5 +113,21 @@ public class Question implements Parcelable{
 
     public void setAnswerNo(int answerNo) {
         this.answerNo = answerNo;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public static String[] getAlldifficultyLevels(){
+        return new String[]{
+                DIFFICULTY_EASY,
+                DIFFICULTY_MEDIUM,
+                DIFFICULTY_HARD
+        };
     }
 }
