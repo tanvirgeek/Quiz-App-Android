@@ -47,11 +47,11 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     }
 
     private void fillQuestionsTable(){
-        Question q1 = new Question("A is correct", "A", "B","C","D",1);
-        Question q2 = new Question("B is correct", "A", "B","C","D",2);
+        Question q1 = new Question("A is correct", "A", "B","C","D",1,Question.DIFFICULTY_EASY);
+        Question q2 = new Question("B is correct", "A", "B","C","D",2,Question.DIFFICULTY_HARD);
 
-        Question q3 = new Question("A is correct", "A", "B","C","D",1);
-        Question q4 = new Question("B is correct", "A", "B","C","D",2);
+        Question q3 = new Question("A is correct", "A", "B","C","D",1,Question.DIFFICULTY_MEDIUM);
+        Question q4 = new Question("B is correct", "A", "B","C","D",2,Question.DIFFICULTY_EASY);
         addQuestion(q1);
         addQuestion(q2);
         addQuestion(q3);
