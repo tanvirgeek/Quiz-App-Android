@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,15 +19,23 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_QUIZ = 1;
     public static final String SHARED_PREFS = "sharedprefs";
     public static final String KEY_HIGHSCORE = "KEYHIGHSCORE";
+    public static final String EXTRADIFFICULTY = "extraDifficulty";
 
     private TextView textViewHighScore;
     private int highScore;
+    private Spinner spinnerDifficulty ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         textViewHighScore = findViewById(R.id.text_view_highscore);
+        spinnerDifficulty = findViewById(R.id.spinner_difficulty);
+
+        String[] difficultyLevels = Question.getAlldifficultyLevels();
+        ArrayAdapter<String> adapterDifficulty = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,difficultyLevels);
+        spinnerDifficulty.setAdapter(adapterDifficulty);
+        adapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         loadHighScore();
 
         Button buttonStartQuiz = findViewById(R.id.button_start_quiz);
@@ -39,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startQuiz(){
+        String difficulty = spinnerDifficulty.getSelectedItem().toString();
+
         Intent i = new Intent(MainActivity.this,QuizActivity.class);
+        i.putExtra(EXTRADIFFICULTY, difficulty);
         startActivityForResult(i,REQUEST_CODE_QUIZ);
     }
 
