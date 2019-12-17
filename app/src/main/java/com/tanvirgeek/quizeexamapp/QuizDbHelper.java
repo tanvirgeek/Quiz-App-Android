@@ -34,7 +34,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
                 QuestionsTable.COLUMN_OPTION2 + " TEXT, " +
                 QuestionsTable.COLUMN_OPTION3 + " TEXT, " +
                 QuestionsTable.COLUMN_OPTION4 + " TEXT, " +
-                QuestionsTable.COLUMN_ANSWERNO + " INTEGER " + ")";
+                QuestionsTable.COLUMN_ANSWERNO + "INTEGER" + QuestionsTable.COLUMN_DIFFICULTY + "TEXT" + ")";
 
         db.execSQL(SQL_CREATE_QUESTIONS_TABLE);
         fillQuestionsTable();
@@ -66,6 +66,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         cv.put(QuestionsTable.COLUMN_OPTION3,question.getOption3());
         cv.put(QuestionsTable.COLUMN_OPTION4,question.getOption4());
         cv.put(QuestionsTable.COLUMN_ANSWERNO,question.getAnswerNo());
+        cv.put(QuestionsTable.COLUMN_ANSWERNO,question.getAnswerNo());
         db.insert(QuestionsTable.TABLE_NAME,null,cv);
     }
 
@@ -82,6 +83,29 @@ public class QuizDbHelper extends SQLiteOpenHelper {
                 q.setOption3(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION3)));
                 q.setOption4(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION4)));
                 q.setAnswerNo(c.getInt(c.getColumnIndex(QuestionsTable.COLUMN_ANSWERNO)));
+                q.setDifficulty(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_ANSWERNO)));
+                questionList.add(q);
+            }while(c.moveToNext());
+        }
+        c.close();
+        return questionList;
+    }
+
+    public ArrayList<Question> getQuestions(String difficulty){
+        ArrayList<Question> questionList = new ArrayList<>();
+        db = getReadableDatabase();
+        String[] selectionArgs = new String[]{difficulty};
+        Cursor c = db.rawQuery("SELECT * FROM " + QuestionsTable.TABLE_NAME + "WHERE" + QuestionsTable.COLUMN_DIFFICULTY + " = ?", selectionArgs);
+        if(c.moveToFirst()){
+            do{
+                Question q = new Question();
+                q.setQuestion(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_QUESTIONS)));
+                q.setOption1(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION1)));
+                q.setOption2(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION2)));
+                q.setOption3(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION3)));
+                q.setOption4(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION4)));
+                q.setAnswerNo(c.getInt(c.getColumnIndex(QuestionsTable.COLUMN_ANSWERNO)));
+                q.setDifficulty(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_ANSWERNO)));
                 questionList.add(q);
             }while(c.moveToNext());
         }
