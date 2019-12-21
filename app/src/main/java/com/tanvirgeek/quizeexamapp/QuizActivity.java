@@ -79,6 +79,8 @@ public class QuizActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String difficulty = intent.getStringExtra(MainActivity.EXTRADIFFICULTY);
 
+        textViewDifficulty.setText("Difficulty: " + difficulty);
+
         if (savedInstanceState == null) {
             QuizDbHelper dbHelper = new QuizDbHelper(this);
             questionList = dbHelper.getQuestions(difficulty);
@@ -257,6 +259,7 @@ public class QuizActivity extends AppCompatActivity {
         outState.putInt(KEY_SCORE, score);
         outState.putInt(KEY_QUESTION_COUNT,questionCounter);
         outState.putLong(KEY_MILLIS_LEFT,timeLeftinMillis);
+        outState.putBoolean(KEY_ANSWERED, answered);
         outState.putParcelableArrayList(KEY_QUESTION_LIST,questionList);
     }
 }

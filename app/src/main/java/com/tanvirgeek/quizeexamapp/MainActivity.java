@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateHighScore(int highScoreNew){
         highScore = highScoreNew;
-        textViewHighScore.setText("Highsore:" + highScore);
+        textViewHighScore.setText("Highschore:" + highScore);
 
         SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
