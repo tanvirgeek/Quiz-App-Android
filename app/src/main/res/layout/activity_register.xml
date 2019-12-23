@@ -23,71 +23,77 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="Full Name"
-        android:maxLines="1"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:maxLines="1" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/editTextUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="username"
-        android:maxLines="1"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:maxLines="1" />
+
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="password"
-        android:maxLines="1"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:maxLines="1" />
+
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="email"
-        android:maxLines="1"
-        android:inputType="textEmailAddress"/>
+        android:inputType="textEmailAddress"
+        android:maxLines="1" />
+
     <EditText
         android:id="@+id/editTextCollege"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="College Name"
-        android:maxLines="1"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:maxLines="1" />
+
     <EditText
         android:id="@+id/editTextDateOfBirth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="Date of Birth"
-        android:maxLines="1"
-        android:inputType="date"/>
+        android:inputType="date"
+        android:maxLines="1" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gender:"/>
+        android:text="Gender:" />
+
     <RadioGroup
+        android:id="@+id/radioGroupGender"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/radioGroupGender">
+        android:layout_height="wrap_content">
+
         <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="male"
-            android:checked="true"
             android:id="@+id/radioBtnMale"
-            />
-        <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="female"
-            android:checked="false"
+            android:checked="true"
+            android:text="male" />
+
+        <RadioButton
             android:id="@+id/radioBtnFemale"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="female" />
 
     </RadioGroup>
 
@@ -96,18 +102,18 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/btnRegister"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Register"
-            android:id="@+id/btnRegister"/>
+            android:layout_weight="1"
+            android:text="Register" />
 
         <Button
+            android:id="@+id/btnCancel"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:id="@+id/cancel"/>
+            android:layout_weight="1"
+            android:text="Cancel" />
 
 
     </LinearLayout>

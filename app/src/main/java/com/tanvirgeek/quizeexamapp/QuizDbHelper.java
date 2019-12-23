@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 
 import androidx.annotation.Nullable;
 
@@ -37,8 +38,35 @@ public class QuizDbHelper extends SQLiteOpenHelper {
                 QuestionsTable.COLUMN_ANSWERNO + " INTEGER, " +
                 QuestionsTable.COLUMN_DIFFICULTY + " TEXT " + ")";
 
+        final String SQL_CREATE_USER_TABLE = "CREATE TABLE if not exists \"user\" (\n" +
+                "\t\"ID\"\tINTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "\t\"Username\"\tTEXT,\n" +
+                "\t\"Password\"\tTEXT,\n" +
+                "\t\"Email\"\tTEXT,\n" +
+                "\t\"Fullname\"\tTEXT,\n" +
+                "\t\"College\"\tTEXT,\n" +
+                "\t\"Gender\"\tTEXT,\n" +
+                "\t\"DOB\"\tTEXT\n" +
+                ")";
+
         db.execSQL(SQL_CREATE_QUESTIONS_TABLE);
+        db.execSQL(SQL_CREATE_USER_TABLE);
         fillQuestionsTable();
+    }
+
+    public void insertUser(ContentValues contentValues){
+        getWritableDatabase().insert("user","",contentValues);
+    }
+
+    public boolean isLoginValid(String username, String password){
+        String sql = "Select count(*) from user where username = '" + username + "' password ='"+ password + "'" ;
+        SQLiteStatement statement = getReadableDatabase().compileStatement(sql);
+        long l = statement.simpleQueryForLong();
+        if(l==1){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
