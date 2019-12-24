@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="username"
+        android:hint="Student Username"
         android:maxLines="1" />
 
     <EditText
@@ -50,6 +50,37 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Register" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="40dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Admin Login"
+            android:textSize="30sp"
+            android:layout_marginBottom="10dp"/>
+        <EditText
+            android:id="@+id/editTextAdminUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Admin User Name" />
+
+        <EditText
+            android:id="@+id/EditTextAdminPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+            android:hint="Password" />
+        <Button
+            android:id="@+id/btnAdminLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Admin Login" />
 
     </LinearLayout>
 

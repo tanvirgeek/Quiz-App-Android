@@ -32,7 +32,7 @@ public class login extends AppCompatActivity {
                 if(db.isLoginValid(usernameValue,passwordValue)){
                     Intent i = new Intent(login.this, MainActivity.class);
                     startActivity(i);
-                    Toast.makeText(login.this,"Login Successfull", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(login.this,"Login Successful", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(login.this,"Invalid User or Password", Toast.LENGTH_SHORT).show();
                 }

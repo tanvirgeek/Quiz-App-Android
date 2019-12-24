@@ -59,7 +59,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     }
 
     public boolean isLoginValid(String username, String password){
-        String sql = "Select count(*) from user where username = '" + username + "' password ='"+ password + "'" ;
+        String sql = "Select count(*) from user where username = '" + username + "' and password ='"+ password + "'" ;
         SQLiteStatement statement = getReadableDatabase().compileStatement(sql);
         long l = statement.simpleQueryForLong();
         if(l==1){
