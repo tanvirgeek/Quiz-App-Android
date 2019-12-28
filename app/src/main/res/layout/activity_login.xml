@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:inputType="textPassword"
         android:hint="password"
         android:maxLines="1" />
 
@@ -71,10 +72,10 @@
             android:hint="Admin User Name" />
 
         <EditText
-            android:id="@+id/EditTextAdminPassword"
+            android:id="@+id/editTextAdminPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberPassword"
+            android:inputType="textPassword"
             android:hint="Password" />
         <Button
             android:id="@+id/btnAdminLogin"
