@@ -19,23 +19,23 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_QUIZ = 1;
     public static final String SHARED_PREFS = "sharedprefs";
     public static final String KEY_HIGHSCORE = "KEYHIGHSCORE";
-    public static final String EXTRADIFFICULTY = "extraDifficulty";
+    public static final String EXTRACHAPTER = "chapter";
 
     private TextView textViewHighScore;
     private int highScore;
-    private Spinner spinnerDifficulty ;
+    private Spinner spinnerChapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         textViewHighScore = findViewById(R.id.text_view_highscore);
-        spinnerDifficulty = findViewById(R.id.spinner_difficulty);
+        spinnerChapter = findViewById(R.id.spinner_chapter);
 
-        String[] difficultyLevels = Question.getAlldifficultyLevels();
-        ArrayAdapter<String> adapterDifficulty = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,difficultyLevels);
-        spinnerDifficulty.setAdapter(adapterDifficulty);
-        adapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        String[] chapters = Question.getAllChapterNames();
+        ArrayAdapter<String> adapterChapters = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,chapters);
+        spinnerChapter.setAdapter(adapterChapters);
+        adapterChapters.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         loadHighScore();
 
         Button buttonStartQuiz = findViewById(R.id.button_start_quiz);
@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startQuiz(){
-        String difficulty = spinnerDifficulty.getSelectedItem().toString();
+        String difficulty = spinnerChapter.getSelectedItem().toString();
 
         Intent i = new Intent(MainActivity.this,QuizActivity.class);
-        i.putExtra(EXTRADIFFICULTY, difficulty);
+        i.putExtra(EXTRACHAPTER, difficulty);
         startActivityForResult(i,REQUEST_CODE_QUIZ);
     }
 

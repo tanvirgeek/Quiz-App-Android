@@ -1,6 +1,5 @@
 package com.tanvirgeek.quizeexamapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,7 +7,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
 public class QuizActivity extends AppCompatActivity {
@@ -77,13 +74,13 @@ public class QuizActivity extends AppCompatActivity {
         getTextcolorDefaultCD = textViewCountDown.getTextColors();
 
         Intent intent = getIntent();
-        String difficulty = intent.getStringExtra(MainActivity.EXTRADIFFICULTY);
+        String chapterName = intent.getStringExtra(MainActivity.EXTRACHAPTER);
 
-        textViewDifficulty.setText("Difficulty: " + difficulty);
+        textViewDifficulty.setText("Chapter Name: " + chapterName);
 
         if (savedInstanceState == null) {
             QuizDbHelper dbHelper = new QuizDbHelper(this);
-            questionList = dbHelper.getQuestions(difficulty);
+            questionList = dbHelper.getQuestions(chapterName);
             questionCountTotal = questionList.size();
             Collections.shuffle(questionList);
 

@@ -5,28 +5,28 @@ import android.os.Parcelable;
 
 public class Question implements Parcelable{
 
-    public static final String DIFFICULTY_EASY = "EASY";
-    public static final String DIFFICULTY_MEDIUM = "MEDIUM";
-    public static final String DIFFICULTY_HARD = "HARD";
+    public static final String CHAPTER_1 = "CHAPTER_1";
+    public static final String CHAPTER_2 = "CHAPTER_2";
+    public static final String CHAPTER_3 = "CHAPTER_3";
     private String question;
     private String option1;
     private String option2;
     private String option3;
     private String option4;
     private int answerNo;
-    private String difficulty;
+    private String chapterName;
 
     public Question(){}
 
     public Question(String question, String option1, String option2, String option3,
-                    String option4, int answerNo, String difficulty) {
+                    String option4, int answerNo, String chapterName) {
         this.question = question;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
         this.option4 = option4;
         this.answerNo = answerNo;
-        this.difficulty = difficulty;
+        this.chapterName = chapterName;
     }
 
     protected Question(Parcel in) {
@@ -36,7 +36,7 @@ public class Question implements Parcelable{
         option3 = in.readString();
         option4 = in.readString();
         answerNo = in.readInt();
-        difficulty = in.readString();
+        chapterName = in.readString();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Question implements Parcelable{
         dest.writeString(option3);
         dest.writeString(option4);
         dest.writeInt(answerNo);
-        dest.writeString(difficulty);
+        dest.writeString(chapterName);
     }
 
     @Override
@@ -115,19 +115,19 @@ public class Question implements Parcelable{
         this.answerNo = answerNo;
     }
 
-    public String getDifficulty() {
-        return difficulty;
+    public String getChapterName() {
+        return chapterName;
     }
 
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
+    public void setChapterName(String difficulty) {
+        this.chapterName = difficulty;
     }
 
-    public static String[] getAlldifficultyLevels(){
+    public static String[] getAllChapterNames(){
         return new String[]{
-                DIFFICULTY_EASY,
-                DIFFICULTY_MEDIUM,
-                DIFFICULTY_HARD
+                CHAPTER_1,
+                CHAPTER_2,
+                CHAPTER_3
         };
     }
 }
