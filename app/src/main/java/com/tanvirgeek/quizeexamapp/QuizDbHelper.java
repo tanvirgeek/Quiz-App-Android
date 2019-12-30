@@ -95,6 +95,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         cv.put(QuestionsTable.COLUMN_OPTION4,question.getOption4());
         cv.put(QuestionsTable.COLUMN_ANSWERNO,question.getAnswerNo());
         cv.put(QuestionsTable.COLUMN_CHAPTERNAME,question.getChapterName());
+        db = getReadableDatabase();
         db.insert(QuestionsTable.TABLE_NAME,null,cv);
     }
 
@@ -105,6 +106,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         if(c.moveToFirst()){
             do{
                 Question q = new Question();
+                q.setId(Integer.parseInt(c.getString((c.getColumnIndex(QuestionsTable._ID)))));
                 q.setQuestion(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_QUESTIONS)));
                 q.setOption1(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION1)));
                 q.setOption2(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_OPTION2)));
@@ -139,5 +141,10 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         }
         c.close();
         return questionList;
+    }
+
+    public Integer deleteData(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(QuestionsTable.TABLE_NAME, "_ID = ?", new String[]{id});
     }
 }

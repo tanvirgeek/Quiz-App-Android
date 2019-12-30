@@ -8,6 +8,7 @@ public class Question implements Parcelable{
     public static final String CHAPTER_1 = "CHAPTER_1";
     public static final String CHAPTER_2 = "CHAPTER_2";
     public static final String CHAPTER_3 = "CHAPTER_3";
+    private int id;
     private String question;
     private String option1;
     private String option2;
@@ -129,5 +130,13 @@ public class Question implements Parcelable{
                 CHAPTER_2,
                 CHAPTER_3
         };
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

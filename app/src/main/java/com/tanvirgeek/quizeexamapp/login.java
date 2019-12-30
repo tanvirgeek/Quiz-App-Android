@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 public class login extends AppCompatActivity {
 
-    private final String ADMIN_USERNAME = "Tadmin";
-    private final String ADMIN_PASSWORD = "T1248";
+    private final String ADMIN_USERNAME = "T";
+    private final String ADMIN_PASSWORD = "T";
     EditText editTextUsername, editTextPassword,editTextAdminUserName,editTextAdminPassword;
     Button btnLogin, btnRegister, btnAdminLogin;
     QuizDbHelper db;

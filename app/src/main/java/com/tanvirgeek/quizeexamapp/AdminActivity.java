@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class AdminActivity extends AppCompatActivity {
     Button btnCreateQuestion, btnReadQuestion, btnDeleteQuestion;
     EditText editTextQuestion, editTextOption1, editTextOption2, editTextOption3, editTextOption4,
-        editTextAnswerNo,editTextChapterNo;
+        editTextAnswerNo,editTextChapterNo, editTextDeleteId;
     QuizDbHelper db;
 
     @Override
@@ -31,6 +31,7 @@ public class AdminActivity extends AppCompatActivity {
         editTextOption4 = findViewById(R.id.editTextOption4);
         editTextAnswerNo = findViewById(R.id.editTextAnswerNo);
         editTextChapterNo = findViewById(R.id.editTextChapterNo);
+        editTextDeleteId = findViewById(R.id.deteleId);
         db = new QuizDbHelper(this);
 
         btnCreateQuestion.setOnClickListener(new View.OnClickListener() {
@@ -41,10 +42,20 @@ public class AdminActivity extends AppCompatActivity {
                 String option2 = editTextOption2.getText().toString();
                 String option3 = editTextOption3.getText().toString();
                 String option4 = editTextOption4.getText().toString();
-                Integer answerNo = Integer.parseInt(editTextAnswerNo.getText().toString());
-                String chapterName = editTextAnswerNo.getText().toString();
-                if( question != "" && option1 != "" && option2 != "" && option3 != "" && option4 != "" && answerNo!= null && chapterName != ""){
-                    Question q = new Question(question,option1,option2,option3,option4,answerNo,chapterName);
+                int answerNo =  0;
+                String regex = "[0-9]+";
+                if (!editTextAnswerNo.getText().toString().matches(regex)){
+                    answerNo =0;
+                }else {
+                    answerNo = Integer.parseInt(editTextAnswerNo.getText().toString());
+                }
+                String chapterName = editTextChapterNo.getText().toString();
+                if(!question.equalsIgnoreCase("") && !option1.equalsIgnoreCase("") &&
+                        !option2.equalsIgnoreCase("") && !option3.equalsIgnoreCase("") &&
+                        !option4.equalsIgnoreCase("") && answerNo != 0 && !chapterName.equalsIgnoreCase("")
+                ){
+                Question q = new Question(question,option1,option2,option3,option4,answerNo,chapterName);
+                    //Question q2 = new Question()
                     db.addQuestion(q);
                     Toast.makeText(AdminActivity.this,"Question Added", Toast.LENGTH_SHORT).show();
                 }else{
@@ -53,6 +64,7 @@ public class AdminActivity extends AppCompatActivity {
 
             }
         });
+
         btnReadQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +74,7 @@ public class AdminActivity extends AppCompatActivity {
                }else {
                    StringBuffer buffer = new StringBuffer();
                    for (Question q: allQuestions) {
+                       buffer.append("Id : " + q.getId() + "\n" );
                        buffer.append("Question : " + q.getQuestion() + "\n" );
                        buffer.append("Option1:  " + q.getOption1() + "\n");
                        buffer.append("Option2:  " + q.getOption2() + "\n");
@@ -82,7 +95,12 @@ public class AdminActivity extends AppCompatActivity {
         btnDeleteQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Integer deleteRows = db.deleteData(editTextDeleteId.getText().toString());
+                if(deleteRows > 0){
+                    Toast.makeText(AdminActivity.this,"Data Deleted",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(AdminActivity.this,"Data Not Deleted",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
