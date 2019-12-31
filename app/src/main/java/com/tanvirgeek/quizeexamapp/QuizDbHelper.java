@@ -147,4 +147,29 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(QuestionsTable.TABLE_NAME, "_ID = ?", new String[]{id});
     }
+
+    public ArrayList<User> getAllUser(){
+        ArrayList<User> userList = new ArrayList<>();
+        db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM user",null);
+        if(c.moveToFirst()){
+            do{
+                User u = new User();
+                u.setCollegeName(c.getString(c.getColumnIndex("College")));
+                u.setDob(c.getString(c.getColumnIndex("DOB")));
+                u.setId(Integer.parseInt(c.getString(c.getColumnIndex("ID"))));
+                u.setUserName(c.getString(c.getColumnIndex("DOB")));
+                u.setFullName(c.getString(c.getColumnIndex("Fullname")));
+                u.setEmail(c.getString(c.getColumnIndex("Email")));
+                u.setGender(c.getString(c.getColumnIndex("Gender")));
+                userList.add(u);
+            }while (c.moveToNext());
+        }
+        return userList;
+    }
+
+    public Integer deleteUser(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete("user", "ID = ?", new String[]{id});
+    }
 }

@@ -12,9 +12,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class AdminActivity extends AppCompatActivity {
-    Button btnCreateQuestion, btnReadQuestion, btnDeleteQuestion;
+    Button btnCreateQuestion, btnReadQuestion, btnDeleteQuestion, btnSeeUsers, btnDeleteUser;
     EditText editTextQuestion, editTextOption1, editTextOption2, editTextOption3, editTextOption4,
-        editTextAnswerNo,editTextChapterNo, editTextDeleteId;
+        editTextAnswerNo,editTextChapterNo, editTextDeleteId, editTextDeleteUser;
     QuizDbHelper db;
 
     @Override
@@ -32,6 +32,9 @@ public class AdminActivity extends AppCompatActivity {
         editTextAnswerNo = findViewById(R.id.editTextAnswerNo);
         editTextChapterNo = findViewById(R.id.editTextChapterNo);
         editTextDeleteId = findViewById(R.id.deteleId);
+        btnSeeUsers = findViewById(R.id.btnReadUsers);
+        btnDeleteUser = findViewById(R.id.btnDeleteUser);
+        editTextDeleteUser = findViewById(R.id.editTextDeleteUser);
         db = new QuizDbHelper(this);
 
         btnCreateQuestion.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +103,45 @@ public class AdminActivity extends AppCompatActivity {
                     Toast.makeText(AdminActivity.this,"Data Deleted",Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(AdminActivity.this,"Data Not Deleted",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnSeeUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<User> allUsers = db.getAllUser();
+                if(allUsers.size()< 1){
+                    Toast.makeText(AdminActivity.this,"No Users in the Database", Toast.LENGTH_SHORT).show();
+                }else {
+                    StringBuffer buffer = new StringBuffer();
+                    for (User u: allUsers) {
+                        buffer.append("Id : " + u.getId() + "\n" );
+                        buffer.append("User Name : " + u.getUserName() + "\n" );
+                        buffer.append("Email:  " + u.getEmail() + "\n");
+                        buffer.append("Fullname:  " + u.getEmail() + "\n");
+                        buffer.append("College:  " + u.getCollegeName() + "\n");
+                        buffer.append("Gender:  " + u.getGender() + "\n");
+                        buffer.append("DOB:  " + u.getDob() + "\n");
+                    }
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AdminActivity.this);
+                    builder.setCancelable(true);
+                    builder.setTitle("Questions");
+                    builder.setMessage(buffer.toString());
+                    builder.show();
+                }
+            }
+        });
+
+        btnDeleteUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer deleteRows = db.deleteUser(editTextDeleteUser.getText().toString());
+                if(deleteRows > 0){
+                    Toast.makeText(AdminActivity.this,"User Deleted",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(AdminActivity.this,"User Not Deleted",Toast.LENGTH_SHORT).show();
                 }
             }
         });
