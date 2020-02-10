@@ -10,6 +10,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AdminActivity extends AppCompatActivity {
     Button btnCreateQuestion, btnReadQuestion, btnDeleteQuestion, btnSeeUsers, btnDeleteUser;
@@ -110,7 +117,57 @@ public class AdminActivity extends AppCompatActivity {
         btnSeeUsers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<User> allUsers = db.getAllUser();
+
+                // Pull Data from Mysql Database
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://192.168.0.107/MedicalQuiz/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                UsersAPI usersAPI = retrofit.create(UsersAPI.class);
+
+                Call<List<User>>  call= usersAPI.getUsers();
+
+                call.enqueue(new Callback<List<User>>() {
+                    @Override
+                    public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                        if (!response.isSuccessful()) {
+                            Toast.makeText(AdminActivity.this,"Success"+response.code(),Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        List<User> users = response.body();
+
+                        if(users.size()< 1){
+                            Toast.makeText(AdminActivity.this,"No Users in the Database", Toast.LENGTH_SHORT).show();
+                        }else {
+                            StringBuffer buffer = new StringBuffer();
+                            for (User u: users) {
+                                buffer.append("Id : " + u.getId() + "\n" );
+                                buffer.append("User Name : " + u.getUserName() + "\n" );
+                                buffer.append("Email:  " + u.getEmail() + "\n");
+                                buffer.append("Fullname:  " + u.getEmail() + "\n");
+                                buffer.append("College:  " + u.getCollegeName() + "\n");
+                                buffer.append("Gender:  " + u.getGender() + "\n");
+                                buffer.append("DOB:  " + u.getDob() + "\n");
+                            }
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(AdminActivity.this);
+                            builder.setCancelable(true);
+                            builder.setTitle("Users");
+                            builder.setMessage(buffer.toString());
+                            builder.show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<User>> call, Throwable t) {
+                        Toast.makeText(AdminActivity.this, "Error"+ t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+                //pull users from local database
+               /* ArrayList<User> allUsers = db.getAllUser();
                 if(allUsers.size()< 1){
                     Toast.makeText(AdminActivity.this,"No Users in the Database", Toast.LENGTH_SHORT).show();
                 }else {
@@ -127,10 +184,10 @@ public class AdminActivity extends AppCompatActivity {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(AdminActivity.this);
                     builder.setCancelable(true);
-                    builder.setTitle("Questions");
+                    builder.setTitle("Users");
                     builder.setMessage(buffer.toString());
                     builder.show();
-                }
+                }*/
             }
         });
 

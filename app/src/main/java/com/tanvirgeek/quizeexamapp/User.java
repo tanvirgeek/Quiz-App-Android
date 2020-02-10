@@ -1,6 +1,8 @@
 package com.tanvirgeek.quizeexamapp;
 
 public class User {
+
+
     private int id;
     private String fullName;
     private String userName;
