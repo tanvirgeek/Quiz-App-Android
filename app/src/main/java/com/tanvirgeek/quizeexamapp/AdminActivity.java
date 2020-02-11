@@ -23,6 +23,11 @@ public class AdminActivity extends AppCompatActivity {
     EditText editTextQuestion, editTextOption1, editTextOption2, editTextOption3, editTextOption4,
         editTextAnswerNo,editTextChapterNo, editTextDeleteId, editTextDeleteUser;
     QuizDbHelper db;
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("http://192.168.0.107/MedicalQuiz/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+    UsersAPI usersAPI = retrofit.create(UsersAPI.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,19 +124,12 @@ public class AdminActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // Pull Data from Mysql Database
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://192.168.0.107/MedicalQuiz/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                UsersAPI usersAPI = retrofit.create(UsersAPI.class);
-
                 Call<List<User>>  call= usersAPI.getUsers();
-
                 call.enqueue(new Callback<List<User>>() {
                     @Override
                     public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                         if (!response.isSuccessful()) {
-                            Toast.makeText(AdminActivity.this,"Success"+response.code(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AdminActivity.this,"Response code: "+response.code(),Toast.LENGTH_SHORT).show();
                             return;
                         }
 
@@ -148,7 +146,7 @@ public class AdminActivity extends AppCompatActivity {
                                 buffer.append("Fullname:  " + u.getEmail() + "\n");
                                 buffer.append("College:  " + u.getCollegeName() + "\n");
                                 buffer.append("Gender:  " + u.getGender() + "\n");
-                                buffer.append("DOB:  " + u.getDob() + "\n");
+                                buffer.append("DOB:  " + u.getDob() + "\n\n");
                             }
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(AdminActivity.this);
@@ -161,7 +159,7 @@ public class AdminActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<List<User>> call, Throwable t) {
-                        Toast.makeText(AdminActivity.this, "Error"+ t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminActivity.this, "Error : "+ t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -194,12 +192,29 @@ public class AdminActivity extends AppCompatActivity {
         btnDeleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                int deleteId = Integer.parseInt(editTextDeleteUser.getText().toString());
+                Call<Void> call = usersAPI.deletePost(deleteId);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        Toast.makeText(AdminActivity.this,"Response code: "+response.code(),Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(AdminActivity.this, "Error : "+ t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                /*
                 Integer deleteRows = db.deleteUser(editTextDeleteUser.getText().toString());
                 if(deleteRows > 0){
                     Toast.makeText(AdminActivity.this,"User Deleted",Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(AdminActivity.this,"User Not Deleted",Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
     }
