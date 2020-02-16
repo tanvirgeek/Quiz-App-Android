@@ -10,14 +10,28 @@ public class User {
     private String dob;
     private String email;
     private String mobileNo;
-    private String Gender;
+    private String gender;
+    private String password;
+
+    public User() {
+    }
+
+    public User(String fullName, String userName, String collegeName, String dob, String email, String gender, String password) {
+        this.fullName = fullName;
+        this.userName = userName;
+        this.collegeName = collegeName;
+        this.dob = dob;
+        this.email = email;
+        this.gender = gender;
+        this.password = password;
+    }
 
     public String getGender() {
-        return Gender;
+        return gender;
     }
 
     public void setGender(String gender) {
-        Gender = gender;
+        this.gender = gender;
     }
 
     public int getId() {
